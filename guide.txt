@@ -1,0 +1,89 @@
+When a cpu is "reset" 
+
+SR is set to supervisor mode and not sleeping 
+
+PC is set to "reset" address 
+
+Program at reset address 
+
+Copies OS from persistent storage  
+
+PC set to OS' start address 
+
+Start first process (init) 
+
+Starts daemons (helper programs) 
+
+On each of the "consoles" 
+
+Start a login process connected to it 
+
+If the login is ok 
+
+Exec user's shell 
+
+ 
+
+ 
+
+Forever: 
+
+While waitForPid:  # wait for child to be reaped if not in background 
+
+Wait with hang & report 
+
+If zombie was waitForPid 
+
+waitForPid = None 
+
+While any other children have terminated 
+
+Wait without hang and report 
+
+Prints prompt $ 
+
+Reads command 
+
+If command is built-in 
+
+Do it 
+
+Othewise (command is the name of a file containing a program) 
+
+fork 
+
+If child 
+
+Replace my memory with the contents of the program and set my PC = &program's first instruction 
+
+Else (parent) 
+
+Map child's PID to command string 
+
+If command doesn't end in & 
+
+Set waitForPid = child's pid 
+
+Else 
+
+Set waitForPid = None 
+
+ 
+
+Execve: syscall to replace process' memory with content of a file 
+
+Params 
+
+Filename of program to copy into memory 
+
+Argv (the list of parameters) 
+
+Environment (dictionary of name:value pairs 
+
+If exec succeeds 
+
+Sampe process is now running another program 
+
+(exec doesn't return) 
+
+Exec returns (with some failure indications) 
